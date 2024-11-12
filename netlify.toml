@@ -2,6 +2,9 @@
   publish = "public"
   functions = "netlify/functions"
 
+[[include]]
+  path = "netlify/functions/views"
+
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/app"
