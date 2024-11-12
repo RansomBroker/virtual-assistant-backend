@@ -1,38 +1,40 @@
 // netlify/functions/app.js
 const express = require("express");
 const serverless = require("serverless-http");
-const path = require("path");
-const createError = require("http-errors");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
 const cors = require("cors");
-const axios = require("axios");
-const indexRouter = require("../../routes/index");
-
 const app = express();
+const textToSpeech = require("./helpers/tts");
 
 // Middleware
 app.use(cors({ origin: "*" }));
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../../public")));
 
-// Routes
-app.use("/", indexRouter);
+// Simple Route for /talk
+app.post("/talk", (req, res) => {
+  const { text, language } = req.body;
+  textToSpeech(req.body.text, req.body.language)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      res.json({});
+    });
 
-// Error handling for 404
-app.use((req, res, next) => {
-  next(createError(404));
+  // For demonstration, simply respond with the text and language received
+  res.json({
+    message: "Received your request",
+    text: text,
+    language: language,
+  });
 });
 
-// Error handler
-app.use((err, req, res, next) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-  res.status(err.status || 500);
-  res.render("error");
+// Error handling for undefined routes
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Route not found",
+  });
 });
 
+// Export handler for Netlify
 module.exports.handler = serverless(app);

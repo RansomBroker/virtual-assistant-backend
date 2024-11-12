@@ -1,20 +1,17 @@
-// netlify/functions/talk.js
-const textToSpeech = require("../../helpers/tts");
-
 exports.handler = async (event, context) => {
-  const { text, language } = JSON.parse(event.body);
-
   try {
-    const result = await textToSpeech(text, language);
+    const { text, language } = JSON.parse(event.body);
     return {
       statusCode: 200,
-      body: JSON.stringify(result),
+      body: JSON.stringify({ message: "Test successful", text, language }),
     };
   } catch (error) {
+    console.error("Error:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: "Failed to process text-to-speech request.",
+        error: "Error processing request",
+        details: error.message,
       }),
     };
   }
