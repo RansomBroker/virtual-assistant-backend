@@ -11,6 +11,10 @@ const indexRouter = require("../../routes/index");
 
 const app = express();
 
+// Setup view engine
+app.set("views", path.join(__dirname, "../../views"));
+app.set("view engine", "pug");
+
 // Middleware
 app.use(cors({ origin: "*" }));
 app.use(logger("dev"));
@@ -25,14 +29,6 @@ app.use("/", indexRouter);
 // Error handling for 404
 app.use((req, res, next) => {
   next(createError(404));
-});
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send(`
-    <h1>Error</h1>
-    <p>${err.message}</p>
-  `);
 });
 
 // Error handler
