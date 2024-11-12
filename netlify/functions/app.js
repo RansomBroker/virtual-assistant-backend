@@ -11,10 +11,6 @@ const indexRouter = require("../../routes/index");
 
 const app = express();
 
-// Setup view engine
-app.set("views", path.join(__dirname, "../../views"));
-app.set("view engine", "pug");
-
 // Middleware
 app.use(cors({ origin: "*" }));
 app.use(logger("dev"));
