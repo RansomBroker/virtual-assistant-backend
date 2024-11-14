@@ -5,7 +5,7 @@
  */
 
 var app = require("../app");
-var debug = require("debug")("talking-avatar-backend:server");
+var debug = require("debug")("talking-avatar.evorty.id:server");
 var http = require("http");
 
 /**

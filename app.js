@@ -47,7 +47,7 @@ async function callYourselfToMaintainServerRunning() {
   let config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "http://localhost:5000",
+    url: "https:talking-avatar.evorty.id",
     headers: {},
   };
 
