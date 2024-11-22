@@ -11,8 +11,6 @@ var app = express();
 
 const axios = require("axios");
 
-var port = process.env.PORT || 3000;
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -80,8 +78,5 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-app.listen(port);
-console.log("Listening on localhost:" + port);
-
 // If u want use nodedemon
-// module.exports = app;
+module.exports = app;
