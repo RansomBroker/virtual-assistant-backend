@@ -11,12 +11,15 @@ var app = express();
 
 const axios = require("axios");
 
+var port = process.env.PORT || 3000;
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 var corsOptions = {
   origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 app.use(cors(corsOptions));
 app.use(logger("dev"));
@@ -77,4 +80,8 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+app.listen(port);
+console.log("Listening on localhost:" + port);
+
+// If u want use nodedemon
+// module.exports = app;
